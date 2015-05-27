@@ -11,8 +11,8 @@ public class MainActivity extends ActionBarActivity {
 
     int i;
     int j;
-    int[] size = {3,4,7,8,9};
-    int[] value = {4,5,10,11,13};
+    int[] size = {1};
+    int[] value = {1};
     int capacity=16;
     int[][] D= new int[100][100];
 
@@ -23,29 +23,37 @@ public class MainActivity extends ActionBarActivity {
 
         /*base solution*/
 
-        for( i=0; i<capacity; i++){
-             D[i][0]=i/size[0];
-        }
+        for( i=0; i<=capacity; i++){
+            if (i>size[0]) {
+                D[i][0] = value[0];
 
+            }
+            else{
+                D[i][0] = 0;
+            }
+        }
         for( j=0; j<size.length; j++){
             D[0][j]=0;
         }
 
-       for(i=1; i<=capacity; i++) {
-            for (j = 1; j < size.length; j++) {
-                if (i<size[j]){
+        int sum =size[0];
+        for (j = 1; j < size.length; j++) {
+            sum=sum+size[j];
+            for(i=1; i<=capacity; i++) {
+                if (i>=sum){
+
                     D[i][j]=D[i][j-1];
-                    Log.i("test", "i= "+Integer.toString(i)+" j="+Integer.toString(j)+ " D= "+Integer.toString(D[i][j]));
                 }
                 else{
-
-                    D[i][j] = Math.max(     D[i - size[j]][j] + value[j],                  D[i][j - 1]);
-                    Log.i("test", "i= "+Integer.toString(i)+" j="+Integer.toString(j)+ " D= "+Integer.toString(D[i][j]));
+                    D[i][j] = Math.max(     D[i - size[i]][j] + value[j],                  D[i][j - 1]);
                 }
+
+
+                Log.i("test", "i= "+Integer.toString(i)+" j="+Integer.toString(j)+ " D= "+Integer.toString(D[i][j])+" sum="+Integer.toString(sum));
 
             }
         }
-        Log.i("test", Integer.toString(D[i][j]));
+        Log.i("test", "maxvalue= "+Integer.toString(D[capacity][size.length-1]));
 
 
 
